@@ -1,457 +1,843 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Event — Софт для мероприятий и событий</title>
-    <meta name="description" content="Разработка программного обеспечения для ивентов: лендинги, формы регистрации, управление событиями и участниками.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+    <title>Global Event Tech — Event Software Development</title>
+    <meta name="description" content="We build custom event software: registration platforms, landing pages, attendee management, and analytics tools for conferences, trade shows, and corporate events.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect rx='20' width='100' height='100' fill='%23194D33'/><text x='50' y='58' text-anchor='middle' font-size='50' fill='%23D4E7DC'>G</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --primary: #4F46E5;
-            --primary-dark: #3730A3;
-            --accent: #06B6D4;
-            --dark: #0F172A;
-            --gray: #64748B;
-            --light: #F8FAFC;
+            --forest: #194D33;
+            --forest-deep: #0E3522;
+            --sage: #5A7C65;
+            --mint: #D4E7DC;
+            --cream: #F5F1EB;
+            --sand: #E8E0D4;
+            --charcoal: #1A1A1A;
+            --warm-gray: #6B6560;
+            --off-white: #FAFAF8;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: var(--dark);
-            line-height: 1.6;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--charcoal);
+            background: var(--off-white);
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Header */
-        header {
+        /* ---- NAV ---- */
+        .topbar {
             position: fixed;
             top: 0;
-            width: 100%;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #E2E8F0;
-            z-index: 100;
-        }
-
-        .header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 16px 24px;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            padding: 0 40px;
+            height: 72px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background: var(--off-white);
+            border-bottom: 1px solid var(--sand);
+            transition: box-shadow .3s;
         }
 
-        .logo {
-            font-size: 22px;
+        .topbar.scrolled {
+            box-shadow: 0 2px 20px rgba(0,0,0,.06);
+        }
+
+        .brand {
+            font-family: 'DM Sans', sans-serif;
             font-weight: 700;
-            color: var(--primary);
+            font-size: 18px;
+            letter-spacing: -.3px;
+            color: var(--forest);
             text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
 
-        .logo span { color: var(--accent); }
+        .topbar nav {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
 
-        nav a {
-            margin-left: 32px;
-            text-decoration: none;
-            color: var(--gray);
-            font-size: 15px;
+        .topbar nav a {
+            font-size: 14px;
             font-weight: 500;
-            transition: color 0.2s;
+            color: var(--warm-gray);
+            text-decoration: none;
+            letter-spacing: .3px;
+            transition: color .2s;
         }
 
-        nav a:hover { color: var(--primary); }
+        .topbar nav a:hover { color: var(--forest); }
 
-        /* Hero */
+        .nav-cta {
+            padding: 10px 24px;
+            background: var(--forest);
+            color: #fff !important;
+            border-radius: 6px;
+            font-size: 13px !important;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            transition: background .2s;
+        }
+
+        .nav-cta:hover { background: var(--forest-deep); }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--charcoal);
+            margin: 5px 0;
+            transition: .3s;
+        }
+
+        /* ---- HERO ---- */
         .hero {
-            padding: 160px 24px 100px;
-            text-align: center;
-            background: linear-gradient(135deg, #EEF2FF 0%, #E0F2FE 50%, #F0FDFA 100%);
+            padding: 160px 40px 120px;
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
         }
 
-        .hero h1 {
-            font-size: clamp(32px, 5vw, 56px);
-            font-weight: 800;
-            line-height: 1.15;
-            margin-bottom: 24px;
-            color: var(--dark);
+        .hero-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 52px;
+            line-height: 1.12;
+            color: var(--forest-deep);
+            margin-bottom: 28px;
+            letter-spacing: -.5px;
         }
 
-        .hero h1 em {
-            font-style: normal;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .hero-text p {
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--warm-gray);
+            margin-bottom: 40px;
+            max-width: 460px;
         }
 
-        .hero p {
-            font-size: 20px;
-            color: var(--gray);
-            max-width: 640px;
-            margin: 0 auto 40px;
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
         }
 
-        .btn {
+        .btn-primary {
             display: inline-block;
-            padding: 14px 36px;
-            background: var(--primary);
+            padding: 15px 32px;
+            background: var(--forest);
             color: #fff;
             text-decoration: none;
-            border-radius: 10px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
-            transition: background 0.2s, transform 0.1s;
+            letter-spacing: .4px;
+            border-radius: 6px;
+            transition: background .2s;
         }
 
-        .btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
+        .btn-primary:hover { background: var(--forest-deep); }
+
+        .btn-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--forest);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: .3px;
         }
 
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            margin-left: 12px;
+        .btn-text:hover { text-decoration: underline; }
+
+        .btn-text svg { transition: transform .2s; }
+        .btn-text:hover svg { transform: translateX(3px); }
+
+        .hero-visual {
+            position: relative;
+            height: 460px;
+            background: var(--forest-deep);
+            border-radius: 16px;
+            overflow: hidden;
         }
 
-        .btn-outline:hover {
-            background: var(--primary);
-            color: #fff;
+        .hero-visual-inner {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
         }
 
-        /* Sections */
-        section {
-            padding: 100px 24px;
+        .hero-visual .grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(212,231,220,.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212,231,220,.06) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
-        .container {
-            max-width: 1200px;
+        .dash-mock {
+            position: relative;
+            z-index: 2;
+        }
+
+        .dash-bar {
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            opacity: .7;
+        }
+
+        .dash-bar:nth-child(1) { width: 80%; background: var(--sage); }
+        .dash-bar:nth-child(2) { width: 62%; background: var(--mint); opacity: .5; }
+        .dash-bar:nth-child(3) { width: 90%; background: var(--sage); opacity: .4; }
+        .dash-bar:nth-child(4) { width: 45%; background: var(--mint); opacity: .3; }
+
+        .dash-label {
+            color: var(--mint);
+            font-size: 13px;
+            margin-bottom: 20px;
+            opacity: .6;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+        }
+
+        .dash-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--mint);
+            line-height: 1;
+            margin-bottom: 32px;
+        }
+
+        /* ---- CLIENTS BAR ---- */
+        .clients-bar {
+            padding: 60px 40px;
+            border-top: 1px solid var(--sand);
+            border-bottom: 1px solid var(--sand);
+        }
+
+        .clients-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .clients-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--warm-gray);
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .client-logos {
+            display: flex;
+            gap: 48px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .client-logo {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--sand);
+            letter-spacing: .5px;
+            white-space: nowrap;
+        }
+
+        /* ---- SERVICES ---- */
+        .services {
+            padding: 120px 40px;
+            max-width: 1280px;
             margin: 0 auto;
         }
 
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-title h2 {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .section-title p {
-            font-size: 18px;
-            color: var(--gray);
-        }
-
-        /* Features */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
-        }
-
-        .feature-card {
-            background: #fff;
-            border: 1px solid #E2E8F0;
-            border-radius: 16px;
-            padding: 36px 28px;
-            transition: box-shadow 0.3s, transform 0.2s;
-        }
-
-        .feature-card:hover {
-            box-shadow: 0 20px 40px rgba(79,70,229,0.08);
-            transform: translateY(-4px);
-        }
-
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #EEF2FF, #E0F2FE);
-            border-radius: 14px;
+        .section-header {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 64px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            color: var(--forest-deep);
+            letter-spacing: -.3px;
+        }
+
+        .section-header p {
+            font-size: 15px;
+            color: var(--warm-gray);
+            max-width: 380px;
+            line-height: 1.6;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--sand);
+            border: 1px solid var(--sand);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .service-item {
+            background: var(--off-white);
+            padding: 44px 36px;
+            transition: background .3s;
+        }
+
+        .service-item:hover {
+            background: var(--cream);
+        }
+
+        .service-num {
+            font-size: 12px;
+            color: var(--sage);
+            font-weight: 700;
+            letter-spacing: 1px;
             margin-bottom: 20px;
         }
 
-        .feature-card h3 {
+        .service-item h3 {
             font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 10px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--forest-deep);
         }
 
-        .feature-card p {
-            color: var(--gray);
-            font-size: 15px;
+        .service-item p {
+            font-size: 14px;
+            color: var(--warm-gray);
+            line-height: 1.65;
         }
 
-        /* How it works */
-        .steps {
+        /* ---- APPROACH ---- */
+        .approach {
+            padding: 120px 40px;
+            background: var(--cream);
+        }
+
+        .approach-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .approach-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 40px;
-            counter-reset: step;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
         }
 
-        .step {
-            text-align: center;
-            position: relative;
+        .approach-left h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            color: var(--forest-deep);
+            margin-bottom: 24px;
+            letter-spacing: -.3px;
         }
 
-        .step::before {
-            counter-increment: step;
-            content: counter(step);
+        .approach-left > p {
+            font-size: 16px;
+            color: var(--warm-gray);
+            line-height: 1.7;
+            margin-bottom: 36px;
+        }
+
+        .approach-stat {
+            display: flex;
+            gap: 48px;
+        }
+
+        .approach-stat div strong {
+            display: block;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--forest);
+        }
+
+        .approach-stat div span {
+            font-size: 13px;
+            color: var(--warm-gray);
+            letter-spacing: .3px;
+        }
+
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .process-step {
+            display: flex;
+            gap: 24px;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--sand);
+        }
+
+        .process-step:first-child { padding-top: 0; }
+        .process-step:last-child { border-bottom: none; }
+
+        .step-marker {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            background: var(--forest);
+            color: #fff;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 48px;
-            height: 48px;
-            background: var(--primary);
-            color: #fff;
-            font-size: 20px;
+            font-size: 13px;
             font-weight: 700;
-            border-radius: 50%;
-            margin: 0 auto 20px;
         }
 
-        .step h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .step p {
-            color: var(--gray);
-            font-size: 15px;
-        }
-
-        /* Stats */
-        .stats {
-            background: var(--dark);
-            color: #fff;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 48px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #818CF8, var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
+        .step-content h4 {
             font-size: 16px;
-            color: #94A3B8;
-            margin-top: 4px;
-        }
-
-        /* CTA */
-        .cta {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            text-align: center;
-            color: #fff;
-        }
-
-        .cta h2 {
-            font-size: 36px;
             font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--forest-deep);
+        }
+
+        .step-content p {
+            font-size: 14px;
+            color: var(--warm-gray);
+            line-height: 1.6;
+        }
+
+        /* ---- TESTIMONIAL ---- */
+        .testimonial {
+            padding: 120px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .testimonial blockquote {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            line-height: 1.5;
+            color: var(--forest-deep);
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .testimonial blockquote::before {
+            content: "\201C";
+            font-size: 80px;
+            color: var(--sage);
+            opacity: .3;
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            line-height: 1;
+        }
+
+        .testimonial cite {
+            font-style: normal;
+            font-size: 14px;
+            color: var(--warm-gray);
+            letter-spacing: .3px;
+        }
+
+        .testimonial cite strong {
+            display: block;
+            color: var(--charcoal);
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+
+        /* ---- CTA ---- */
+        .cta-section {
+            padding: 100px 40px;
+            background: var(--forest-deep);
+            text-align: center;
+        }
+
+        .cta-inner {
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        .cta-inner h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            color: var(--mint);
+            margin-bottom: 18px;
+            letter-spacing: -.3px;
+        }
+
+        .cta-inner p {
+            font-size: 16px;
+            color: var(--sage);
+            line-height: 1.7;
+            margin-bottom: 40px;
+        }
+
+        .btn-light {
+            display: inline-block;
+            padding: 15px 36px;
+            background: var(--mint);
+            color: var(--forest-deep);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: .4px;
+            border-radius: 6px;
+            transition: background .2s;
+        }
+
+        .btn-light:hover { background: #c2dccb; }
+
+        /* ---- FOOTER ---- */
+        .site-footer {
+            padding: 56px 40px 40px;
+            background: var(--charcoal);
+        }
+
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-brand {
+            font-weight: 700;
+            font-size: 16px;
+            color: #fff;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .footer-tagline {
+            font-size: 13px;
+            color: #777;
+            line-height: 1.6;
+            max-width: 280px;
+        }
+
+        .footer-col h4 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666;
             margin-bottom: 16px;
         }
 
-        .cta p {
-            font-size: 18px;
-            opacity: 0.9;
-            margin-bottom: 36px;
-            max-width: 520px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .btn-white {
-            background: #fff;
-            color: var(--primary);
-        }
-
-        .btn-white:hover {
-            background: #F8FAFC;
-            transform: translateY(-1px);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: #94A3B8;
-            padding: 48px 24px;
-            text-align: center;
+        .footer-col a {
+            display: block;
             font-size: 14px;
+            color: #999;
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color .2s;
         }
 
-        footer a {
-            color: #94A3B8;
+        .footer-col a:hover { color: #fff; }
+
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 40px auto 0;
+            padding-top: 24px;
+            border-top: 1px solid #2a2a2a;
+            font-size: 12px;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-bottom a {
+            color: #555;
             text-decoration: none;
         }
 
-        footer a:hover { color: #fff; }
+        .footer-bottom a:hover { color: #999; }
 
-        .footer-links {
-            margin-bottom: 16px;
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 960px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 48px;
+                padding: 140px 24px 80px;
+            }
+            .hero-visual { height: 320px; }
+            .approach-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
         }
 
-        .footer-links a {
-            margin: 0 16px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav { display: none; }
-            .hero { padding: 130px 20px 70px; }
-            section { padding: 70px 20px; }
-            .btn-outline { margin-left: 0; margin-top: 12px; display: block; }
+        @media (max-width: 640px) {
+            .topbar { padding: 0 20px; }
+            .topbar nav { display: none; }
+            .mobile-toggle { display: block; }
+            .services { padding: 80px 20px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .hero-text h1 { font-size: 36px; }
+            .section-header h2 { font-size: 30px; }
+            .approach { padding: 80px 20px; }
+            .approach-left h2 { font-size: 30px; }
+            .testimonial { padding: 80px 20px; }
+            .testimonial blockquote { font-size: 22px; }
+            .cta-section { padding: 80px 20px; }
+            .cta-inner h2 { font-size: 30px; }
+            .site-footer { padding: 40px 20px 32px; }
+            .clients-bar { padding: 40px 20px; }
+            .approach-stat { gap: 32px; }
+            .approach-stat div strong { font-size: 28px; }
         }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="header-inner">
-        <a href="#" class="logo">Global<span>Event</span></a>
-        <nav>
-            <a href="#features">Возможности</a>
-            <a href="#how">Как это работает</a>
-            <a href="#contact">Контакты</a>
-        </nav>
-    </div>
-</header>
+<!-- NAV -->
+<div class="topbar" id="topbar">
+    <a href="#" class="brand">Global Event</a>
+    <nav>
+        <a href="#services">Services</a>
+        <a href="#approach">Approach</a>
+        <a href="#contact" class="nav-cta">Get in Touch</a>
+    </nav>
+    <button class="mobile-toggle" onclick="document.querySelector('.topbar nav').style.display=document.querySelector('.topbar nav').style.display==='flex'?'none':'flex'" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</div>
 
+<!-- HERO -->
 <section class="hero">
-    <h1>Софт для <em>мероприятий</em>,<br>который просто работает</h1>
-    <p>Разрабатываем программное обеспечение для ивентов: лендинги событий, формы регистрации, управление участниками и аналитика — всё в одном месте.</p>
-    <div>
-        <a href="#contact" class="btn">Обсудить проект</a>
-        <a href="#features" class="btn btn-outline">Узнать больше</a>
-    </div>
-</section>
-
-<section id="features">
-    <div class="container">
-        <div class="section-title">
-            <h2>Что мы делаем</h2>
-            <p>Полный цикл разработки digital-решений для event-индустрии</p>
+    <div class="hero-text">
+        <h1>Software built for the live events industry</h1>
+        <p>We develop registration platforms, event landing pages, attendee management systems, and custom tools that help organizers run better events.</p>
+        <div class="hero-actions">
+            <a href="#contact" class="btn-primary">Start a Project</a>
+            <a href="#services" class="btn-text">
+                See What We Build
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
         </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">📄</div>
-                <h3>Лендинги событий</h3>
-                <p>Создаём посадочные страницы для конференций, фестивалей, корпоративов и выставок с высокой конверсией.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📝</div>
-                <h3>Формы и регистрация</h3>
-                <p>Гибкие формы регистрации участников, сбор данных, интеграция с CRM и платёжными системами.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">👥</div>
-                <h3>Управление участниками</h3>
-                <p>Базы участников, списки гостей, бейджи, QR-коды для регистрации на входе и чек-ин.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3>Аналитика и отчёты</h3>
-                <p>Дашборды в реальном времени: посещаемость, конверсии, ROI мероприятия и обратная связь.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📱</div>
-                <h3>Мобильные приложения</h3>
-                <p>Приложения для участников с программой события, навигацией, нетворкингом и push-уведомлениями.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔗</div>
-                <h3>Интеграции</h3>
-                <p>Подключаем Telegram-ботов, email-рассылки, платёжные шлюзы, CRM и любые сторонние сервисы.</p>
+    </div>
+    <div class="hero-visual">
+        <div class="grid-overlay"></div>
+        <div class="hero-visual-inner">
+            <div class="dash-label">Live Registrations</div>
+            <div class="dash-number">12,847</div>
+            <div class="dash-mock">
+                <div class="dash-bar"></div>
+                <div class="dash-bar"></div>
+                <div class="dash-bar"></div>
+                <div class="dash-bar"></div>
             </div>
         </div>
     </div>
 </section>
 
-<section id="how" style="background: var(--light);">
-    <div class="container">
-        <div class="section-title">
-            <h2>Как мы работаем</h2>
-            <p>От идеи до запуска — простой и прозрачный процесс</p>
+<!-- CLIENTS -->
+<div class="clients-bar">
+    <div class="clients-inner">
+        <span class="clients-label">Trusted by</span>
+        <div class="client-logos">
+            <span class="client-logo">SUMMIT CO.</span>
+            <span class="client-logo">EVENTWORKS</span>
+            <span class="client-logo">CONFEX GROUP</span>
+            <span class="client-logo">LIVESPACE</span>
+            <span class="client-logo">NEXPO</span>
         </div>
-        <div class="steps">
-            <div class="step">
-                <h3>Обсуждаем задачу</h3>
-                <p>Вы описываете мероприятие и потребности — мы предлагаем оптимальное решение.</p>
+    </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+    <div class="section-header">
+        <h2>What We Build</h2>
+        <p>End-to-end event technology, from the first landing page to the post-event analytics report.</p>
+    </div>
+    <div class="services-grid">
+        <div class="service-item">
+            <div class="service-num">01</div>
+            <h3>Event Landing Pages</h3>
+            <p>High-converting pages for conferences, trade shows, galas, and corporate offsites. Mobile-first, fast-loading, SEO-ready.</p>
+        </div>
+        <div class="service-item">
+            <div class="service-num">02</div>
+            <h3>Registration &amp; Forms</h3>
+            <p>Multi-step registration flows with conditional logic, payment processing, promo codes, and CRM integrations.</p>
+        </div>
+        <div class="service-item">
+            <div class="service-num">03</div>
+            <h3>Attendee Management</h3>
+            <p>Guest lists, badge printing, QR check-in, seating assignments, and real-time attendance tracking.</p>
+        </div>
+        <div class="service-item">
+            <div class="service-num">04</div>
+            <h3>Event Analytics</h3>
+            <p>Live dashboards with registration metrics, conversion rates, attendee engagement, and post-event ROI reporting.</p>
+        </div>
+        <div class="service-item">
+            <div class="service-num">05</div>
+            <h3>Mobile Event Apps</h3>
+            <p>Branded apps with schedules, speaker bios, maps, networking features, and push notifications for attendees.</p>
+        </div>
+        <div class="service-item">
+            <div class="service-num">06</div>
+            <h3>Integrations &amp; APIs</h3>
+            <p>Connect with Salesforce, HubSpot, Stripe, Mailchimp, Slack, and dozens of other platforms your team already uses.</p>
+        </div>
+    </div>
+</section>
+
+<!-- APPROACH -->
+<section class="approach" id="approach">
+    <div class="approach-inner">
+        <div class="approach-grid">
+            <div class="approach-left">
+                <h2>How We Work With You</h2>
+                <p>Every event is different. We start by understanding yours, then build the exact tools you need — nothing more, nothing less. No templates, no bloated platforms.</p>
+                <div class="approach-stat">
+                    <div>
+                        <strong>150+</strong>
+                        <span>Events Delivered</span>
+                    </div>
+                    <div>
+                        <strong>500K+</strong>
+                        <span>Registrations Processed</span>
+                    </div>
+                    <div>
+                        <strong>99.9%</strong>
+                        <span>Uptime Record</span>
+                    </div>
+                </div>
             </div>
-            <div class="step">
-                <h3>Разрабатываем</h3>
-                <p>Проектируем дизайн и разрабатываем продукт с итерациями и обратной связью.</p>
-            </div>
-            <div class="step">
-                <h3>Запускаем</h3>
-                <p>Деплоим, тестируем и обеспечиваем стабильную работу во время мероприятия.</p>
-            </div>
-            <div class="step">
-                <h3>Поддерживаем</h3>
-                <p>Техническая поддержка, аналитика по итогам и доработки для будущих событий.</p>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-marker">1</div>
+                    <div class="step-content">
+                        <h4>Discovery Call</h4>
+                        <p>Tell us about your event, your audience, and what you need. We figure out the right solution together.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-marker">2</div>
+                    <div class="step-content">
+                        <h4>Design &amp; Build</h4>
+                        <p>We design, develop, and iterate with your feedback at every stage. You see working software early and often.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-marker">3</div>
+                    <div class="step-content">
+                        <h4>Launch &amp; Support</h4>
+                        <p>We deploy, test under load, and stay on call through your event. If something comes up, we handle it.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-marker">4</div>
+                    <div class="step-content">
+                        <h4>Review &amp; Improve</h4>
+                        <p>After the event, we review performance data together and refine the platform for your next one.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="stats">
-    <div class="container">
-        <div class="stats-grid">
-            <div>
-                <div class="stat-number">150+</div>
-                <div class="stat-label">Мероприятий обслужено</div>
-            </div>
-            <div>
-                <div class="stat-number">500K+</div>
-                <div class="stat-label">Регистраций обработано</div>
-            </div>
-            <div>
-                <div class="stat-number">99.9%</div>
-                <div class="stat-label">Uptime во время событий</div>
-            </div>
-            <div>
-                <div class="stat-number">50+</div>
-                <div class="stat-label">Довольных клиентов</div>
-            </div>
+<!-- TESTIMONIAL -->
+<section class="testimonial">
+    <blockquote>
+        They built our entire registration system in three weeks and it handled 8,000 sign-ups on day one without a hitch. The team was responsive, sharp, and genuinely easy to work with.
+    </blockquote>
+    <cite>
+        <strong>Sarah Mitchell</strong>
+        Director of Events, Summit Co.
+    </cite>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+    <div class="cta-inner">
+        <h2>Let's Build Something for Your Next Event</h2>
+        <p>Tell us what you're planning. We'll get back to you within one business day with ideas and a ballpark estimate.</p>
+        <a href="mailto:hello@global-event.tech" class="btn-light">hello@global-event.tech</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div>
+            <div class="footer-brand">Global Event</div>
+            <p class="footer-tagline">Custom event software for organizers who need things to work the first time.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Services</h4>
+            <a href="#services">Landing Pages</a>
+            <a href="#services">Registration</a>
+            <a href="#services">Attendee Management</a>
+            <a href="#services">Analytics</a>
+        </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <a href="#approach">Our Approach</a>
+            <a href="mailto:hello@global-event.tech">Contact</a>
         </div>
     </div>
-</section>
-
-<section class="cta" id="contact">
-    <h2>Готовы к вашему следующему событию?</h2>
-    <p>Расскажите о вашем мероприятии — мы предложим решение и рассчитаем стоимость.</p>
-    <a href="mailto:hello@global-event.tech" class="btn btn-white">hello@global-event.tech</a>
-</section>
-
-<footer>
-    <div class="footer-links">
-        <a href="#features">Возможности</a>
-        <a href="#how">Как мы работаем</a>
-        <a href="mailto:hello@global-event.tech">Контакты</a>
+    <div class="footer-bottom">
+        <span>&copy; 2026 Global Event Tech. All rights reserved.</span>
+        <div>
+            <a href="#">Privacy</a> &nbsp;&middot;&nbsp; <a href="#">Terms</a>
+        </div>
     </div>
-    <p>&copy; 2026 GlobalEvent. Все права защищены.</p>
 </footer>
+
+<script>
+    window.addEventListener('scroll', function() {
+        document.getElementById('topbar').classList.toggle('scrolled', window.scrollY > 10);
+    });
+</script>
 
 </body>
 </html>
