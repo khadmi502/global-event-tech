@@ -635,8 +635,8 @@
 <body>
 
 <!-- NAV -->
-<div class="topbar" id="topbar">
-    <a href="#" class="brand">Global Event</a>
+<div class="topbar" id="top">
+    <a href="#top" class="brand">Global Event</a>
     <nav>
         <a href="#services">Services</a>
         <a href="#approach">Approach</a>
@@ -828,14 +828,111 @@
     <div class="footer-bottom">
         <span>&copy; 2026 Global Event Tech. All rights reserved.</span>
         <div>
-            <a href="#">Privacy</a> &nbsp;&middot;&nbsp; <a href="#">Terms</a>
+            <a href="#" onclick="document.getElementById('modal-privacy').style.display='flex';return false">Privacy</a> &nbsp;&middot;&nbsp; <a href="#" onclick="document.getElementById('modal-terms').style.display='flex';return false">Terms</a>
         </div>
     </div>
 </footer>
 
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-privacy" onclick="if(event.target===this)this.style.display='none'">
+    <div class="modal-box">
+        <button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button>
+        <h2>Privacy Policy</h2>
+        <p><strong>Last updated:</strong> March 2026</p>
+        <p>Global Event Tech ("we", "us") respects your privacy. This policy explains how we handle information when you visit our website.</p>
+        <h3>Information We Collect</h3>
+        <p>We do not collect personal data through this website unless you contact us directly via email. When you do, we only use your information to respond to your inquiry.</p>
+        <h3>Cookies &amp; Analytics</h3>
+        <p>This site may use basic analytics (e.g., Cloudflare Web Analytics) to understand traffic patterns. No personal data is sold or shared with third parties.</p>
+        <h3>Third-Party Services</h3>
+        <p>We use Google Fonts for typography. Google may collect anonymized usage data per their privacy policy.</p>
+        <h3>Contact</h3>
+        <p>Questions about this policy? Reach us at <a href="mailto:hello@global-event.tech">hello@global-event.tech</a>.</p>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-terms" onclick="if(event.target===this)this.style.display='none'">
+    <div class="modal-box">
+        <button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button>
+        <h2>Terms of Service</h2>
+        <p><strong>Last updated:</strong> March 2026</p>
+        <p>By accessing this website (global-event.tech), you agree to these terms.</p>
+        <h3>Use of Website</h3>
+        <p>This website is provided for informational purposes. We make no warranties about the accuracy or completeness of the content. You may not use this site for any unlawful purpose.</p>
+        <h3>Intellectual Property</h3>
+        <p>All content, design, and code on this website are the property of Global Event Tech unless otherwise noted. You may not reproduce or redistribute any content without written permission.</p>
+        <h3>Limitation of Liability</h3>
+        <p>Global Event Tech shall not be liable for any damages arising from the use of this website or any linked third-party services.</p>
+        <h3>Changes</h3>
+        <p>We may update these terms at any time. Continued use of the site constitutes acceptance of the updated terms.</p>
+        <h3>Contact</h3>
+        <p>Questions? Email us at <a href="mailto:hello@global-event.tech">hello@global-event.tech</a>.</p>
+    </div>
+</div>
+
+<style>
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: rgba(0,0,0,.5);
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+    }
+    .modal-box {
+        background: var(--off-white);
+        border-radius: 12px;
+        padding: 48px;
+        max-width: 640px;
+        width: 100%;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+    }
+    .modal-box h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 28px;
+        color: var(--forest-deep);
+        margin-bottom: 16px;
+    }
+    .modal-box h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--forest-deep);
+        margin-top: 20px;
+        margin-bottom: 8px;
+    }
+    .modal-box p {
+        font-size: 14px;
+        color: var(--warm-gray);
+        line-height: 1.7;
+        margin-bottom: 8px;
+    }
+    .modal-box a {
+        color: var(--forest);
+    }
+    .modal-close {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        background: none;
+        border: none;
+        font-size: 28px;
+        color: var(--warm-gray);
+        cursor: pointer;
+        line-height: 1;
+    }
+    .modal-close:hover { color: var(--charcoal); }
+    @media (max-width: 640px) {
+        .modal-box { padding: 32px 24px; }
+    }
+</style>
+
 <script>
     window.addEventListener('scroll', function() {
-        document.getElementById('topbar').classList.toggle('scrolled', window.scrollY > 10);
+        document.getElementById('top').classList.toggle('scrolled', window.scrollY > 10);
     });
 </script>
 
