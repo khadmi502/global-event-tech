@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Event — Софт для мероприятий и событий</title>
+    <meta name="description" content="Разработка программного обеспечения для ивентов: лендинги, формы регистрации, управление событиями и участниками.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #3730A3;
+            --accent: #06B6D4;
+            --dark: #0F172A;
+            --gray: #64748B;
+            --light: #F8FAFC;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #E2E8F0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--accent); }
+
+        nav a {
+            margin-left: 32px;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover { color: var(--primary); }
+
+        /* Hero */
+        .hero {
+            padding: 160px 24px 100px;
+            text-align: center;
+            background: linear-gradient(135deg, #EEF2FF 0%, #E0F2FE 50%, #F0FDFA 100%);
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--gray);
+            max-width: 640px;
+            margin: 0 auto 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 36px;
+            background: var(--primary);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            margin-left: 12px;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 24px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            font-size: 18px;
+            color: var(--gray);
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: #fff;
+            border: 1px solid #E2E8F0;
+            border-radius: 16px;
+            padding: 36px 28px;
+            transition: box-shadow 0.3s, transform 0.2s;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 20px 40px rgba(79,70,229,0.08);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #EEF2FF, #E0F2FE);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            font-size: 15px;
+        }
+
+        /* How it works */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 40px;
+            counter-reset: step;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            color: var(--gray);
+            font-size: 15px;
+        }
+
+        /* Stats */
+        .stats {
+            background: var(--dark);
+            color: #fff;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #818CF8, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: #94A3B8;
+            margin-top: 4px;
+        }
+
+        /* CTA */
+        .cta {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            text-align: center;
+            color: #fff;
+        }
+
+        .cta h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .cta p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 36px;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-white {
+            background: #fff;
+            color: var(--primary);
+        }
+
+        .btn-white:hover {
+            background: #F8FAFC;
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: #94A3B8;
+            padding: 48px 24px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #94A3B8;
+            text-decoration: none;
+        }
+
+        footer a:hover { color: #fff; }
+
+        .footer-links {
+            margin-bottom: 16px;
+        }
+
+        .footer-links a {
+            margin: 0 16px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .hero { padding: 130px 20px 70px; }
+            section { padding: 70px 20px; }
+            .btn-outline { margin-left: 0; margin-top: 12px; display: block; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <a href="#" class="logo">Global<span>Event</span></a>
+        <nav>
+            <a href="#features">Возможности</a>
+            <a href="#how">Как это работает</a>
+            <a href="#contact">Контакты</a>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>Софт для <em>мероприятий</em>,<br>который просто работает</h1>
+    <p>Разрабатываем программное обеспечение для ивентов: лендинги событий, формы регистрации, управление участниками и аналитика — всё в одном месте.</p>
+    <div>
+        <a href="#contact" class="btn">Обсудить проект</a>
+        <a href="#features" class="btn btn-outline">Узнать больше</a>
+    </div>
+</section>
+
+<section id="features">
+    <div class="container">
+        <div class="section-title">
+            <h2>Что мы делаем</h2>
+            <p>Полный цикл разработки digital-решений для event-индустрии</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📄</div>
+                <h3>Лендинги событий</h3>
+                <p>Создаём посадочные страницы для конференций, фестивалей, корпоративов и выставок с высокой конверсией.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3>Формы и регистрация</h3>
+                <p>Гибкие формы регистрации участников, сбор данных, интеграция с CRM и платёжными системами.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Управление участниками</h3>
+                <p>Базы участников, списки гостей, бейджи, QR-коды для регистрации на входе и чек-ин.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Аналитика и отчёты</h3>
+                <p>Дашборды в реальном времени: посещаемость, конверсии, ROI мероприятия и обратная связь.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Мобильные приложения</h3>
+                <p>Приложения для участников с программой события, навигацией, нетворкингом и push-уведомлениями.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <h3>Интеграции</h3>
+                <p>Подключаем Telegram-ботов, email-рассылки, платёжные шлюзы, CRM и любые сторонние сервисы.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="how" style="background: var(--light);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Как мы работаем</h2>
+            <p>От идеи до запуска — простой и прозрачный процесс</p>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <h3>Обсуждаем задачу</h3>
+                <p>Вы описываете мероприятие и потребности — мы предлагаем оптимальное решение.</p>
+            </div>
+            <div class="step">
+                <h3>Разрабатываем</h3>
+                <p>Проектируем дизайн и разрабатываем продукт с итерациями и обратной связью.</p>
+            </div>
+            <div class="step">
+                <h3>Запускаем</h3>
+                <p>Деплоим, тестируем и обеспечиваем стабильную работу во время мероприятия.</p>
+            </div>
+            <div class="step">
+                <h3>Поддерживаем</h3>
+                <p>Техническая поддержка, аналитика по итогам и доработки для будущих событий.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="stats">
+    <div class="container">
+        <div class="stats-grid">
+            <div>
+                <div class="stat-number">150+</div>
+                <div class="stat-label">Мероприятий обслужено</div>
+            </div>
+            <div>
+                <div class="stat-number">500K+</div>
+                <div class="stat-label">Регистраций обработано</div>
+            </div>
+            <div>
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">Uptime во время событий</div>
+            </div>
+            <div>
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Довольных клиентов</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta" id="contact">
+    <h2>Готовы к вашему следующему событию?</h2>
+    <p>Расскажите о вашем мероприятии — мы предложим решение и рассчитаем стоимость.</p>
+    <a href="mailto:hello@global-event.tech" class="btn btn-white">hello@global-event.tech</a>
+</section>
+
+<footer>
+    <div class="footer-links">
+        <a href="#features">Возможности</a>
+        <a href="#how">Как мы работаем</a>
+        <a href="mailto:hello@global-event.tech">Контакты</a>
+    </div>
+    <p>&copy; 2026 GlobalEvent. Все права защищены.</p>
+</footer>
+
+</body>
+</html>
